@@ -1,1 +1,1 @@
-# Lab-Aplicacoes-Distribu-das
+# Lab-Aplicações-Distribuídas
