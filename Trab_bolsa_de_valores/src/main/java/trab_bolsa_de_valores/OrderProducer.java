@@ -8,10 +8,10 @@ public class OrderProducer {
     private static final String QUEUE_NAME = "BROKER"; // Nome da fila para receber operações dos clientes
 
     public static void main(String[] args) {
-        String rabbitMqServerAddress = "seu-endereco-do-rabbitmq-na-nuvem"; // Passe o endereço como argumento
+        String rabbitMqServerAddress = "localhost"; // Passe o endereço como argumento
 
         try {
-            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "admin", "admin");
+            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "guest", "guest");
             Connection connection = rabbitMQConnection.createConnection();
 
             // Crie um canal

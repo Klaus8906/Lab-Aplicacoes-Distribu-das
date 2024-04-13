@@ -6,10 +6,10 @@ public class OrderConsumer {
     private static final String EXCHANGE_NAME = "BOLSADEVALORES"; // Nome da exchange para pub/sub
 
     public static void main(String[] args) {
-        String rabbitMqServerAddress = "seu-endereco-do-rabbitmq-na-nuvem"; // Passe o endereço como argumento
+        String rabbitMqServerAddress = "localhost"; // Passe o endereço como argumento
 
         try {
-            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "admin", "admin");
+            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "guest", "guest");
             Connection connection = rabbitMQConnection.createConnection();
 
             // Crie um canal
