@@ -1,5 +1,6 @@
 package trab_bolsa_de_valores;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
 
 public class OrderConsumer {
@@ -24,13 +25,26 @@ public class OrderConsumer {
             // Associe a fila à exchange
             channel.queueBind(queueName, EXCHANGE_NAME, "");
 
-            System.out.println("Aguardando notificações...");
+            System.out.println("Aguardando notificações... Para sair: CTRL + C");
 
             // Crie um consumidor
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println("Notificação recebida: " + message);
-                // Aqui você pode processar a notificação conforme necessário
+
+                // Aqui nós deserializamos a mensagem JSON para uma instância de Order
+            ObjectMapper mapper = new ObjectMapper();
+            Order order = mapper.readValue(message, Order.class);
+            OrderBook orderBook = new OrderBook();
+
+            // Processar a ordem baseado no seu tipo
+            if (order.getOper().equals("COMPRA")) {
+                // lógica para processar uma ordem de compra
+                orderBook.addBuyOrder(order);;
+            } else if (order.getOper().equals("VENDA")) {
+                // lógica para processar uma ordem de venda
+                orderBook.addSellOrder(order);
+            }
             };
 
             // Registre o consumidor na fila

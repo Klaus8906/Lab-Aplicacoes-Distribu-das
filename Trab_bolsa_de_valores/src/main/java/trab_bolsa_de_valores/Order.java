@@ -1,6 +1,7 @@
 package trab_bolsa_de_valores;
 
 public class Order {
+    private String oper;
     private String symbol; // Símbolo da ação (ex: PETR4)
     private int quantity; // Quantidade de ações
     private double price; // Preço da ação
@@ -12,6 +13,14 @@ public class Order {
     }
 
     // Getters e setters
+    public String getOper() {
+        return this.oper;
+    }
+
+    public void setOper(String oper) {
+        this.oper = oper;
+    }
+
     public String getSymbol() {
         return symbol;
     }
