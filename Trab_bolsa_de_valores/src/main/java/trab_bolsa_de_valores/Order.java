@@ -6,10 +6,11 @@ public class Order {
     private int quantity; // Quantidade de ações
     private double price; // Preço da ação
 
-    public Order(String symbol, int quantity, double price) {
+    public Order(String symbol, int quantity, double price, String oper) {
         this.symbol = symbol;
         this.quantity = quantity;
         this.price = price;
+        this.oper = oper;
     }
 
     // Getters e setters
