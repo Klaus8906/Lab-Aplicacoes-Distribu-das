@@ -8,7 +8,6 @@ public class RabbitMQConnection {
     private int port;
     private String username;
     private String password;
-    private Connection connection;
 
     public RabbitMQConnection(String host, int port, String username, String password) {
         this.host = host;
