@@ -7,10 +7,10 @@ public class OrderConsumer {
     private static final String EXCHANGE_NAME = "BOLSADEVALORES"; // Nome da exchange para pub/sub
 
     public static void main(String[] args) {
-        String rabbitMqServerAddress = "localhost"; // Passe o endereço como argumento
+        String rabbitMqServerAddress = "gull.rmq.cloudamqp.com"; // Passe o endereço como argumento
 
         try {
-            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "guest", "guest");
+            RabbitMQConnection rabbitMQConnection = new RabbitMQConnection(rabbitMqServerAddress, 5672, "enzvwect", "3zMCaXyufH92EvroBPRjzj-qYzZrr8Re", "enzvwect");
             Connection connection = rabbitMQConnection.createConnection();
 
             // Crie um canal
@@ -32,16 +32,16 @@ public class OrderConsumer {
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println("Notificação recebida: " + message);
 
-                // Aqui nós deserializamos a mensagem JSON para uma instância de Order
+            // Aqui nós deserializamos a mensagem JSON para uma instância de Order
             ObjectMapper mapper = new ObjectMapper();
             Order order = mapper.readValue(message, Order.class);
             OrderBook orderBook = new OrderBook();
 
             // Processar a ordem baseado no seu tipo
-            if (order.getOper().equals("COMPRA")) {
+            if (message.contains("COMPRA")) {
                 // lógica para processar uma ordem de compra
                 orderBook.addBuyOrder(order);;
-            } else if (order.getOper().equals("VENDA")) {
+            } else if (message.contains("VENDA")) {
                 // lógica para processar uma ordem de venda
                 orderBook.addSellOrder(order);
             }

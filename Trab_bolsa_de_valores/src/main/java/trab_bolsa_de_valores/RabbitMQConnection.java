@@ -8,12 +8,14 @@ public class RabbitMQConnection {
     private int port;
     private String username;
     private String password;
+    private String vhost;
 
-    public RabbitMQConnection(String host, int port, String username, String password) {
+    public RabbitMQConnection(String host, int port, String username, String password, String vhost) {
         this.host = host;
         this.port = port;
         this.username = username;
         this.password = password;
+        this.vhost = vhost;
     }
 
     public Connection createConnection() throws Exception {
@@ -22,8 +24,8 @@ public class RabbitMQConnection {
         factory.setPort(port);
         factory.setUsername(username);
         factory.setPassword(password);
+        factory.setVirtualHost(vhost);
 
         return factory.newConnection();
     }
-
 }
