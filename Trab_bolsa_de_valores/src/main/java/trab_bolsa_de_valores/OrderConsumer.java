@@ -5,6 +5,7 @@ import com.rabbitmq.client.*;
 
 public class OrderConsumer {
     private static final String EXCHANGE_NAME = "BOLSADEVALORES"; // Nome da exchange para pub/sub
+    private static final String QUEUE_NAME = "BROKER"; // Nome da fila para receber operações dos clientes
 
     public static void main(String[] args) {
         String rabbitMqServerAddress = "gull.rmq.cloudamqp.com"; // Passe o endereço como argumento
@@ -20,10 +21,10 @@ public class OrderConsumer {
             channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
             // Crie uma fila temporária (sem nome) exclusiva para este consumidor
-            String queueName = channel.queueDeclare().getQueue();
+            //String queueName = channel.queueDeclare().getQueue();
 
             // Associe a fila à exchange
-            channel.queueBind(queueName, EXCHANGE_NAME, "");
+            channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "");
 
             System.out.println("Aguardando notificações... Para sair: CTRL + C");
 
@@ -40,7 +41,7 @@ public class OrderConsumer {
             // Processar a ordem baseado no seu tipo
             if (message.contains("COMPRA")) {
                 // lógica para processar uma ordem de compra
-                orderBook.addBuyOrder(order);;
+                orderBook.addBuyOrder(order);
             } else if (message.contains("VENDA")) {
                 // lógica para processar uma ordem de venda
                 orderBook.addSellOrder(order);
@@ -48,7 +49,7 @@ public class OrderConsumer {
             };
 
             // Registre o consumidor na fila
-            channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {});
+            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {});
         } catch (Exception e) {
             e.printStackTrace();
         }
